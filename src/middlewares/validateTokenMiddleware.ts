@@ -16,7 +16,6 @@ export async function validateTokenMiddleware(
     }
 
     const token = authorization.replace("Bearer ", "");
-    console.log(token);
     const { userId } = jwt.verify(token, process.env.JWT_SECRET) as {
         userId: number;
     };

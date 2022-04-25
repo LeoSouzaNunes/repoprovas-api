@@ -39,7 +39,6 @@ async function checkUserExistsByEmail(email: string) {
 
 async function checkUserByEmailAndReturnData(email: string) {
     const user = await repository.findUserByEmail(email);
-    console.log(user);
     if (!user) {
         throw error.unauthorized("Invalid credentials.");
     }
