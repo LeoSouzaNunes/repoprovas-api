@@ -1,17 +1,17 @@
 import testRepository from "../repositories/testRepository.js";
 
 interface Filter {
-  groupBy: "disciplines" | "teachers";
+    groupBy: "disciplines" | "teachers";
 }
 
-async function find(filter: Filter) {
-  if (filter.groupBy === "disciplines") {
-    return testRepository.getTestsByDiscipline();
-  } else if (filter.groupBy === "teachers") {
-    return testRepository.getTestsByTeachers();
-  }
+async function find(filter: Filter, whereContent: string) {
+    if (filter.groupBy === "disciplines") {
+        return testRepository.getTestsByDiscipline();
+    } else if (filter.groupBy === "teachers") {
+        return testRepository.getTestsByTeachers();
+    }
 }
 
 export default {
-  find,
+    find,
 };
