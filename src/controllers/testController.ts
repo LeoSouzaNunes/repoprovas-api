@@ -2,16 +2,23 @@ import { Request, Response } from "express";
 import testService from "../services/testService.js";
 
 async function find(req: Request, res: Response) {
-    const { groupBy } = req.query as { groupBy: string };
-    let { whereContent } = req.query as { whereContent: string | undefined };
-    if (!whereContent) {
-        whereContent = "";
-    }
+    const { groupBy, whereContent } = req.query as {
+        groupBy: string;
+        whereContent: string;
+    };
+
     if (groupBy !== "disciplines" && groupBy !== "teachers") {
         return res.sendStatus(400);
     }
+    if (whereContent) {
+        const tests = await testService.findBySearchData(
+            { groupBy },
+            whereContent
+        );
+        return res.send({ tests });
+    }
 
-    const tests = await testService.find({ groupBy }, whereContent);
+    const tests = await testService.find({ groupBy });
     res.send({ tests });
 }
 

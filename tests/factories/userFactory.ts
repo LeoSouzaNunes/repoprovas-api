@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 function createUser() {
     return {
-        email: faker.internet.email("Leonardo", "Nunez"),
+        email: faker.internet.email(),
         password: faker.internet.password(),
     };
 }

@@ -4,7 +4,7 @@ interface Filter {
     groupBy: "disciplines" | "teachers";
 }
 
-async function find(filter: Filter, whereContent: string) {
+async function find(filter: Filter) {
     if (filter.groupBy === "disciplines") {
         return testRepository.getTestsByDiscipline();
     } else if (filter.groupBy === "teachers") {
@@ -12,6 +12,15 @@ async function find(filter: Filter, whereContent: string) {
     }
 }
 
+async function findBySearchData(filter: Filter, whereContent: string) {
+    if (filter.groupBy === "disciplines") {
+        return testRepository.getTestsByDisciplineName(whereContent);
+    } else if (filter.groupBy === "teachers") {
+        return testRepository.getTestsByTeachersName(whereContent);
+    }
+}
+
 export default {
     find,
+    findBySearchData,
 };
