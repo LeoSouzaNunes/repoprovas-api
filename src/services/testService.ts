@@ -20,7 +20,12 @@ async function findBySearchData(filter: Filter, whereContent: string) {
     }
 }
 
+async function update(testId: number) {
+    return testRepository.putViewsByTestId(testId);
+}
+
 export default {
     find,
     findBySearchData,
+    update,
 };

@@ -5,5 +5,10 @@ import { ensureAuthenticatedMiddleware } from "../middlewares/ensureAuthenticate
 const testRouter = Router();
 
 testRouter.get("/tests", ensureAuthenticatedMiddleware, testController.find);
+testRouter.put(
+    "/tests/:testId/views",
+    ensureAuthenticatedMiddleware,
+    testController.update
+);
 
 export default testRouter;

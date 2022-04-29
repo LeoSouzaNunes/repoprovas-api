@@ -22,6 +22,14 @@ async function find(req: Request, res: Response) {
     res.send({ tests });
 }
 
+async function update(req: Request, res: Response) {
+    const { testId } = req.params as { testId: string };
+
+    await testService.update(Number(testId));
+    res.sendStatus(200);
+}
+
 export default {
     find,
+    update,
 };
