@@ -87,10 +87,43 @@ async function putViewsByTestId(testId: number) {
     });
 }
 
+async function createTeacherDisciplineRelation(
+    teacherId: number,
+    disciplineId: number
+) {
+    return prisma.teacherDiscipline.create({
+        data: {
+            teacherId,
+            disciplineId,
+        },
+        select: {
+            id: true,
+        },
+    });
+}
+
+async function createTest(
+    name: string,
+    pdfUrl: string,
+    categoryId: number,
+    teacherDisciplineId: number
+) {
+    return prisma.test.create({
+        data: {
+            name,
+            pdfUrl,
+            categoryId,
+            teacherDisciplineId,
+        },
+    });
+}
+
 export default {
     getTestsByDiscipline,
     getTestsByTeachers,
     getTestsByDisciplineName,
     getTestsByTeachersName,
     putViewsByTestId,
+    createTeacherDisciplineRelation,
+    createTest,
 };

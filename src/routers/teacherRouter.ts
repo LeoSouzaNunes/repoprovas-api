@@ -3,6 +3,10 @@ import { ensureAuthenticatedMiddleware } from "../middlewares/ensureAuthenticate
 import teacherController from "../controllers/teacherController.js";
 
 const teacherRouter = Router();
-teacherRouter.get("/teachers/:disciplineId", teacherController.get);
+teacherRouter.get(
+    "/teachers/:disciplineId",
+    ensureAuthenticatedMiddleware,
+    teacherController.get
+);
 
 export default teacherRouter;
