@@ -15,6 +15,7 @@ function createUserBody() {
 }
 
 async function createUser(body: UserBodyData) {
+    console.log("body create user", body);
     await prisma.user.create({
         data: {
             ...body,
