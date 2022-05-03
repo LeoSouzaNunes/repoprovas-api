@@ -27,13 +27,12 @@ async function createTest(test: TestCreateData) {
         test.disciplineId
     );
 
-    await testRepository.createTest(
+    return await testRepository.createTest(
         test.name,
         test.pdfUrl,
         test.categoryId,
         id
     );
-    return;
 }
 
 async function update(testId: number) {

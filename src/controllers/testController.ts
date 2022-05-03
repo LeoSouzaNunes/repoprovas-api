@@ -32,8 +32,8 @@ async function find(req: Request, res: Response) {
 
 async function post(req: Request, res: Response) {
     const test = req.body as TestCreateData;
-    await testService.createTest(test);
-    res.sendStatus(201);
+    const { id } = await testService.createTest(test);
+    res.status(201).send({ id });
 }
 
 async function update(req: Request, res: Response) {

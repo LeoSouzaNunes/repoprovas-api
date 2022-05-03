@@ -125,6 +125,62 @@ describe("GET /tests with search bar", () => {
     });
 });
 
+describe("PUT /tests/:testId/views", () => {
+    beforeEach(async () => {
+        await truncateTable(
+            'users, tests, "TeacherDiscipline", categories, teachers, disciplines, terms'
+        );
+    });
+    afterAll(disconnect);
+
+    it("should return status code 200 given a valid testId and update views", async () => {
+        await seedDatabase();
+        const token = await returnValidToken();
+        const response = await supertest(app)
+            .put(`/tests/1/views`)
+            .set("Authorization", `Bearer ${token}`);
+        const testAfterPut = await testFactory.getTestById(1);
+        expect(response.statusCode).toEqual(200);
+        expect(testAfterPut.views).toEqual(1);
+    });
+});
+
+describe("POST /tests", () => {
+    beforeEach(async () => {
+        await truncateTable(
+            'users, tests, "TeacherDiscipline", categories, teachers, disciplines, terms'
+        );
+    });
+    afterAll(disconnect);
+
+    it("should return status code 422 given invalid input", async () => {
+        await seedDatabase();
+        const token = await returnValidToken();
+        const response = await supertest(app)
+            .post("/tests")
+            .set("Authorization", `Bearer ${token}`)
+            .send({});
+        expect(response.statusCode).toEqual(422);
+    });
+
+    it("should return status code 201 given valid input and persist data", async () => {
+        await seedDatabase();
+        const token = await returnValidToken();
+        const response = await supertest(app)
+            .post("/tests")
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                name: "Valex",
+                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                categoryId: 1,
+                teacherId: 1,
+                disciplineId: 1,
+            });
+        const data = await testFactory.getTestById(response.body.id);
+        expect(response.statusCode).toEqual(201);
+        expect(data).not.toBe(null);
+    });
+});
 async function seedDatabase() {
     await termFactory.createTerms();
     await disciplineFactory.createDisciplines();

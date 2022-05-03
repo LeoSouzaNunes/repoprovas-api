@@ -91,13 +91,10 @@ async function createTeacherDisciplineRelation(
     teacherId: number,
     disciplineId: number
 ) {
-    return prisma.teacherDiscipline.create({
-        data: {
-            teacherId,
+    return prisma.teacherDiscipline.findFirst({
+        where: {
             disciplineId,
-        },
-        select: {
-            id: true,
+            teacherId,
         },
     });
 }
@@ -114,6 +111,9 @@ async function createTest(
             pdfUrl,
             categoryId,
             teacherDisciplineId,
+        },
+        select: {
+            id: true,
         },
     });
 }
